@@ -1,4 +1,4 @@
-import {API_CART } from "../main.js"
+const API_CART: string = 'https://json-server-8822.herokuapp.com/cart';
 const $: Function = document.querySelector.bind(document);
 const $$: Function = document.querySelectorAll.bind(document);
 const quantityCartIcon = $('.header__cart-notice');
@@ -7,11 +7,12 @@ const load = $('.modal__overlay');
 const displayEmptyCart = $('.emptyProduct');
 const payList = $('.pay__plist');
 const payBtn = $('.menu-pay');
+const totalamount = $('.totalamount');
 const payinvoice = $('.invoice-pay');
 const modalPay = $('.modal__overlay--invoice');
 const btnX = $('.btnX');
 var html: string[];
-var htmlList: string[] | number[];
+var htmlList: string[];
 interface typeInforCart {
     id: number,
     image: string,
@@ -19,7 +20,8 @@ interface typeInforCart {
     soluong: number,
     gia: number
 }
-export {typeInforCart}
+
+export { typeInforCart }
 function PUTDATA(data: typeInforCart, id: number) {
     let options = {
         method: 'PUT',
@@ -29,7 +31,7 @@ function PUTDATA(data: typeInforCart, id: number) {
         body: JSON.stringify(data)
     }
     fetch(API_CART + '/' + id, options)
-    .then(()=>{load.style.display = 'none';})
+        .then(() => { load.style.display = 'none'; })
 }
 btnX.onclick = () => {
     modalPay.style.display = 'none'
@@ -46,21 +48,20 @@ function plusAndMinus(myDataCart: Array<typeInforCart>) {
     plus.forEach((btn: HTMLElement) => {
         btn.addEventListener('click', () => {
             myDataCart.forEach(element => {
-                if (Number(btn.parentElement?.parentElement?.dataset.id) == element.id) {
+                if (Number(btn.parentElement?.parentElement?.parentElement?.dataset.id) == element.id) {
                     ++element.soluong
                 }
             });
-            let total = myDataCart.reduce((total, product) => {
-                return total += (product.gia * product.soluong)
-            }, 0)
             totalPay(myDataCart)
+            console.log(myDataCart);
+
         })
     })
     let minus = $$('.minus')
     minus.forEach((btn: HTMLElement) => {
         btn.addEventListener('click', () => {
             myDataCart.forEach(element => {
-                if (Number(btn.parentElement?.parentElement?.dataset.id) == element.id) {
+                if (Number(btn.parentElement?.parentElement?.parentElement?.dataset.id) == element.id) {
                     if (element.soluong > 1) {
                         --element.soluong
                     }
@@ -74,11 +75,15 @@ function plusAndMinus(myDataCart: Array<typeInforCart>) {
     })
 }
 function Paybtn(myDataCart: Array<typeInforCart>) {
-    payBtn.addEventListener('click', () => {
-        load.style.display = 'block';
-        console.log(myDataCart);
-        htmlList = myDataCart.map((value) => {
-            return `
+    if (myDataCart.length == 0) {
+        payBtn.style.display = 'none'
+        totalamount.style.display = 'none'
+    } else {
+        payBtn.addEventListener('click', () => {
+            load.style.display = 'block';
+            console.log(myDataCart);
+            htmlList = myDataCart.map((value) => {
+                return `
             <tr class="pay__row">
                 <td></td>
                 <td class="nameproduct__row">${value.name}</td>
@@ -87,32 +92,34 @@ function Paybtn(myDataCart: Array<typeInforCart>) {
                 <td>${Intl.NumberFormat('vn-JP', { style: 'currency', currency: 'VND' }).format(value.gia * value.soluong)}</td>
             </tr>                                     
             `
-        })
-        payList.innerHTML = htmlList.join('')
-        modalPay.style.display = 'flex'
-        payinvoice.addEventListener('click', () => {
-            load.style.display = 'block';
-            myDataCart.forEach((element) => {
-                let data = {
-                    id: element.id,
-                    image: element.image,
-                    name: element.name,
-                    gia: element.gia,
-                    soluong: element.soluong
-                }
-                PUTDATA(data, element.id)
             })
-            
+            payList.innerHTML = htmlList.join('')
+            modalPay.style.display = 'flex'
+            payinvoice.addEventListener('click', () => {
+                load.style.display = 'block';
+                myDataCart.forEach((element) => {
+                    let data = {
+                        id: element.id,
+                        image: element.image,
+                        name: element.name,
+                        gia: element.gia,
+                        soluong: element.soluong
+                    }
+                    PUTDATA(data, element.id)
+                })
+
+            })
+            modalPay.onclick = (e: Event & { target: HTMLInputElement }) => {
+                if (e.target.className == "modal__overlay--invoice")
+                    modalPay.style.display = 'none'
+            }
+            load.style.display = 'none';
+
         })
-        modalPay.onclick = (e: Event & { target: HTMLInputElement }) => {
-            if (e.target.className == "modal__overlay--invoice")
-                modalPay.style.display = 'none'
-        }
-        load.style.display = 'none';
-        
-    })
+    }
+
 }
-function getData(callback: (a:Array<typeInforCart>) => Array<typeInforCart>) {
+function getData(callback: (a: Array<typeInforCart>) => Array<typeInforCart>) {
     fetch(API_CART)
         .then((respond) => respond.json())
         .then(callback)
@@ -129,7 +136,7 @@ function getData(callback: (a:Array<typeInforCart>) => Array<typeInforCart>) {
             deletebtns.forEach((btn: HTMLElement) => {
                 btn.addEventListener('click', () => {
                     load.style.display = 'block';
-                    deleteData(Number(btn.parentElement?.dataset.id))
+                    deleteData(Number(btn.parentElement?.parentElement?.dataset.id))
                 })
             })
         })
@@ -143,13 +150,15 @@ function renderData(result: Array<typeInforCart>) {
         <div class="cart__menu-item"  data-id="${value?.id}">
             <img class="cart__menu-img" src="${value.image}" alt="">
             <span class="cart__menu-name">${value.name}</span>
-            <div class="counter">
-                <span class="down minus" onClick='decreaseCount(event, this)'><i class="fas fa-minus"></i></span>
-                <input type="text" value="${value.soluong}">
-                <span class="up plus"  onClick='increaseCount(event, this)'><i class="fas fa-plus"></i></span>
+            <div class="controller-cart">
+                <div class="counter">
+                    <span class="down minus" onClick='decreaseCount(event, this)'><i class="fas fa-minus"></i></span>
+                    <input type="text" value="${value.soluong}">
+                    <span class="up plus"  onClick='increaseCount(event, this)'><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="price-product">${Intl.NumberFormat('vn-JP', { style: 'currency', currency: 'VND' }).format(value.gia)}</div>
+                <span class="delete-btn-cart"">Xóa</span>
             </div>
-            <div class="price-product">${Intl.NumberFormat('vn-JP', { style: 'currency', currency: 'VND' }).format(value.gia)}</div>
-            <span class="delete-btn-cart"">Xóa</span>
         </div>                                      
         `
     })
@@ -157,11 +166,12 @@ function renderData(result: Array<typeInforCart>) {
     load.style.display = 'none';
     return result
 }
+// asyncFunc().then((data:any) => { renderData(data) })
+
 getData(renderData)
 
 //-------------------xoa---------------
-function deleteData(id : number) {
-
+function deleteData(id: number) {
     let options = {
         method: 'DELETE',
         headers: {

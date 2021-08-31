@@ -120,10 +120,14 @@ html{
     padding: 0 8px;
 
 }
-.btn.btn--disable{
+.btn.btn--disable,.disable{
+    opacity: .5;
     color: #949494;
     cursor: default;
-    background-color: #c3c3c3;
+    /* background-color: #c3c3c3; */
+}
+.disable .pagination-item__link{
+    cursor: default;
 }
 /* selection */
 .select-input{
@@ -191,6 +195,7 @@ html{
     margin: 0 16px;
 }
 .pagination-item__link{
+    cursor: pointer;
     display: block;
     text-decoration: none;
     font-size: 2rem;

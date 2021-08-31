@@ -134,7 +134,7 @@
                         <div class="header__search-wrap">
                             <input type="text" class="header__search-input" placeholder="Nhập để tìm kiếm">
                             <div class="header__search-history">
-                                <h3 class="header__search-history-heading">Lịch sử tìm tòi</h3>
+                                <!-- <h3 class="header__search-history-heading">Lịch sử tìm tòi</h3>
                                 <ul class="header__search-history-list">
                                     <li class="header__search-history-item">
                                         <a href="" class="">màn hình 244hz</a>
@@ -142,7 +142,7 @@
                                     <li class="header__search-history-item">
                                         <a href="" class="">màn hình 2994hz</a>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                         <button class="header__search-btn">
@@ -352,23 +352,29 @@
                                 Danh mục
                             </h3>
                             <ul class="category-list">
-                                <li class="category-item ">
-                                    <a href="" class="category-item__link">Linh kiện máy tính</a>
+                                <li id="" class="category-item category-item--active">
+                                    <div class="category-item__link">Linh kiện máy tính</div>
                                 </li>
-                                <li class="category-item">
-                                    <a href="" class="category-item__link">Màn Hình</a>
+                                <li id="MONITOR" class="category-item">
+                                    <div class="category-item__link">Màn Hình</div>
                                 </li>
-                                <li class="category-item">
-                                    <a href="" class="category-item__link">Laptop, Ipad</a>
+                                <li id="MAC" class="category-item">
+                                    <div class="category-item__link">Macbook</div>
                                 </li>
-                                <li class="category-item category-item--active">
-                                    <a href="" class="category-item__link ">VGA</a>
+                                <li id="CARD" class="category-item">
+                                    <div class="category-item__link ">VGA</div>
                                 </li>
-                                <li class="category-item">
-                                    <a href="" class="category-item__link">CPU</a>
+                                <li id="CPU" class="category-item">
+                                    <div class="category-item__link">CPU</div>
                                 </li>
-                                <li class="category-item">
-                                    <a href="" class="category-item__link">Ổ cứng</a>
+                                <li id="COOL" class="category-item">
+                                    <div class="category-item__link">Tản Nhiệt</div>
+                                </li>
+                                <li id="RAM" class="category-item">
+                                    <div class="category-item__link">RAM</div>
+                                </li>
+                                <li id="SPU" class="category-item">
+                                    <div class="category-item__link">Nguồn</div>
                                 </li>
                             </ul>
                         </nav>
@@ -386,11 +392,12 @@
                                 <!-- list -->
                                 <ul class="select-input__list">
                                     <li class="select-input__item">
-                                        <a href="" class="select-input__link">Giá: Thấp đến cao</a>
+                                        <div class="select-input__link sortBtn-asc">Giá: Thấp đến cao</div>
+                                        
                                     </li>
 
                                     <li class="select-input__item">
-                                        <a href="" class="select-input__link">Giá: Cao đến thấp</a>
+                                        <div class="select-input__link sortBtn-des">Giá: Cao đến thấp</div>
                                     </li>
 
                                 </ul>
@@ -398,17 +405,17 @@
 
                             <div class="home-filter__pate">
                                 <span class="home-filter__pate-num">
-                                    <span class="home-filter__pate-current">1</span>/14
+                                    <span class="home-filter__pate-current">1</span>/3
                                 </span>
                                 <div class="home-filter__pate-control">
-                                    <a href="" class="home-filter__pate-btn home-filter__pate-btn--disabled">
+                                    <div class="home-filter__pate-btn first-page">
                                         <i class="home-filter__pate-icon fas fa-angle-left"></i>
 
-                                    </a>
-                                    <a href="" class="home-filter__pate-btn">
+                                    </div>
+                                    <div class="home-filter__pate-btn last-page">
                                         <i class="home-filter__pate-icon fas fa-angle-right"></i>
 
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -446,25 +453,25 @@
                             </div>
                         </div>
                         <ul class="pagination home-product__pagination">
-                            <li class="pagination-item">
-                                <a href="" class="pagination-item__link">
+                            <li class="pagination-previous first-page">
+                                <div class="pagination-item__link">
                                     <i class="pagination-item-icon fas fa-angle-left"></i>
-                                </a>
+                                </div>
                             </li>
-                            <li class="pagination-item pagination-item--active">
-                                <a href="" class="pagination-item__link ">1</a>
-                            </li>
-                            <li class="pagination-item">
-                                <a href="" class="pagination-item__link">2</a>
+                            <li class="pagination-item pagination-item--active fpage">
+                                <div class="pagination-item__link ">1</div>
                             </li>
                             <li class="pagination-item">
-                                <a href="" class="pagination-item__link">...</a>
+                                <div class="pagination-item__link">2</div>
                             </li>
-                            <li class="pagination-item">
-                                <a href="" class="pagination-item__link">5</a>
+                            <!-- <li class="pagination-item">
+                                <div class="pagination-item__link">...</div>
+                            </li> -->
+                            <li class="pagination-item pagination-total-page">
+                                <div class="pagination-item__link">3</div>
                             </li>
-                            <li class="pagination-item">
-                                <a href="" class="pagination-item__link">
+                            <li class="pagination-next last-page">
+                                <div class="pagination-item__link">
                                     <i class="pagination-item-icon fas fa-angle-right"></i>
                                 </a>
                             </li>
