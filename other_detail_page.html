@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <meta
+      name="google-site-verification"
+      content="nqpuWLjuep41qB7s9kSLRVFoQwuEMwfYjc5HLNBsE3k"
+    />
+  </head>
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-T897D3B9E0"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-T897D3B9E0");
+  </script>
+  <body>
+    <script>
+      window.onload = function () {
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        const product = urlParams.get("id");
+
+        document.getElementById("id").innerHTML = product;
+      };
+    </script>
+
+    <h1>Hello World</h1>
+    <h3 id="id"></h3>
+  </body>
+</html>
